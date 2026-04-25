@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Installation') {
+            steps {
+                sh 'sudo dnf install maven -y'
+            }
+        }
+        stage('building') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('release') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+            }
+        }
+    } 
+}  
